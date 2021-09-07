@@ -1,0 +1,41 @@
+// page{
+//   background-color: black;
+// }
+.flex_column{
+  display: flex;
+  flex-direction: column;
+}
+@mixin skeleton{
+  border-radius: 8rpx;
+  height: 1rem;
+  background-color: #ddd;
+}
+.skeleton{
+  @include skeleton;
+}
+.skeleton_100{
+  @include skeleton;
+  width: 100%;
+}
+.skeleton_80{
+  @include skeleton;
+  width: 80%;
+}
+.skeleton_60{
+  @include skeleton;
+  width: 60%;
+}
+.container{
+  color: ddd;
+  text-align: center;
+  open-data[type="userAvatarUrl"]{
+    display: inline-block;
+    width: 66rpx;
+    height: 66rpx;
+    // border-radius: 50%;
+    margin-top: 200rpx;
+  }
+  open-data[type="userNickName"]{
+    width: 100vw;
+  }
+}

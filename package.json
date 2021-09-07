@@ -1,0 +1,39 @@
+{
+  "name": "weapp_bundle",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx webpack --watch --progress",
+    "prod": "npx webpack --mode=production --progress",
+    "debug": "node --inspect-brk ./webpack.config.js --inline --progress"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
+    "assert": "^2.0.0",
+    "babel-loader": "^8.2.2",
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
+    "copy-webpack-plugin": "^9.0.1",
+    "dart-sass": "^1.25.0",
+    "ensure-posix-path": "^1.1.1",
+    "file-loader": "^6.2.0",
+    "path-browserify": "^1.0.1",
+    "progress-bar-webpack-plugin": "^2.1.0",
+    "replace-ext": "^2.0.0",
+    "required-path": "^1.0.1",
+    "sass": "^1.38.2",
+    "sass-loader": "^12.1.0",
+    "speed-measure-webpack-plugin": "^1.5.0",
+    "webpack": "^5.51.1",
+    "webpack-bundle-analyzer": "^4.4.2",
+    "webpack-cli": "^4.8.0"
+  },
+  "dependencies": {
+    "lottie-miniprogram": "^1.0.12"
+  }
+}

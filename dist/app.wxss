@@ -1,0 +1,45 @@
+.flex_column {
+  display: flex;
+  flex-direction: column;
+}
+
+.skeleton {
+  border-radius: 8rpx;
+  height: 1rem;
+  background-color: #ddd;
+}
+
+.skeleton_100 {
+  border-radius: 8rpx;
+  height: 1rem;
+  background-color: #ddd;
+  width: 100%;
+}
+
+.skeleton_80 {
+  border-radius: 8rpx;
+  height: 1rem;
+  background-color: #ddd;
+  width: 80%;
+}
+
+.skeleton_60 {
+  border-radius: 8rpx;
+  height: 1rem;
+  background-color: #ddd;
+  width: 60%;
+}
+
+.container {
+  color: ddd;
+  text-align: center;
+}
+.container open-data[type=userAvatarUrl] {
+  display: inline-block;
+  width: 66rpx;
+  height: 66rpx;
+  margin-top: 200rpx;
+}
+.container open-data[type=userNickName] {
+  width: 100vw;
+}
