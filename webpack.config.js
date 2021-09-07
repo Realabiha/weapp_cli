@@ -5,13 +5,11 @@ const {CleanWebpackPlugin} = require('clean-webpack-plugin')
 const WxRuntimeChunk = require('./build/plugins/wxRuntimeChunk')
 const WxDynamicEntry = require('./build/plugins/wxDynamicEntry')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
-// const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
 
 const SRCDIR = resolve(__dirname, 'src') 
 const smp = new SpeedMeasurePlugin()
 const plugins = [
-  // new ProgressBarPlugin(),
   new BundleAnalyzerPlugin({
     openAnalyzer: false,
   }),
