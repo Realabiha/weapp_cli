@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npx webpack --watch --progress",
     "prod": "npx webpack --mode=production --progress",
-    "debug": "node --inspect-brk ./webpack.config.js --inline --progress"
+    "debug": "node --inspect-brk ./node_modules/webpack/bin/webpack.js"
   },
   "keywords": [],
   "author": "",

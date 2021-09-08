@@ -1,4 +1,5 @@
-import {formatTime} from './utils/util'
+// import {formatTime} from './utils/util'
+import('./utils/util').then(util => console.log(util))
 // app.js
 App({
   onLaunch() {

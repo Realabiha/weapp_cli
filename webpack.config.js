@@ -1,7 +1,6 @@
 const path = require('path')
 const {resolve} = path
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const {CleanWebpackPlugin} = require('clean-webpack-plugin')
 const WxRuntimeChunk = require('./build/plugins/wxRuntimeChunk')
 const WxDynamicEntry = require('./build/plugins/wxDynamicEntry')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
@@ -13,14 +12,13 @@ const plugins = [
   new BundleAnalyzerPlugin({
     openAnalyzer: false,
   }),
-  new CleanWebpackPlugin(),
   new CopyWebpackPlugin({
     patterns: [
       {
         from: '**/*',
         to: '',
         globOptions: {
-          ignore: ['**/*.js', '**/*.wxss', '**/*.scss'],
+          ignore: ['**/*.js', '**/*.scss'],
         },
       },
     ],
@@ -28,8 +26,6 @@ const plugins = [
   new WxDynamicEntry(),
   new WxRuntimeChunk(),
 ]
-
-
 const webpackCommonConfig = {
   context: SRCDIR,
   mode: 'none',
@@ -37,19 +33,20 @@ const webpackCommonConfig = {
   watchOptions: {
     aggregateTimeout: 500,
     ignored: /node_modules/,
-    poll: 1000
+    poll: 1000,
   },
-  entry: {app: './app.js'},
+  entry: { app: './app.js' },
   output: {
     path: resolve(__dirname, 'dist'),
     filename: '[name].js',
     globalObject: 'wx',
+    clean: true,
   },
   resolve: {
     alias: {
-      '@': SRCDIR
+      '@': SRCDIR,
     },
-    extensions: ['.js', '.json']
+    extensions: ['.js', '.json'],
   },
   resolveLoader: {
     modules: ['node_modules', 'build/loaders'],
@@ -94,10 +91,11 @@ const webpackCommonConfig = {
         animationJson: {
           name: 'animationJson',
           test: /json/,
-          priority: 0
-        }
+          priority: 0,
+        },
       },
     },
+    moduleIds: 'named'
   },
 }
 
