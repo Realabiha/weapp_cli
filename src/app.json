@@ -21,6 +21,5 @@
         "pages/subpage/subpage"
       ]
     }
-  ],
-  "workers": "src/workers"
+  ]
 }
