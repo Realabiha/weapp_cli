@@ -13,3 +13,4 @@ const parallelPromise = promises.reduce(
 
 parallelPromise.then(_ => console.log('done')).catch(err => console.log(err))
 
+export {}

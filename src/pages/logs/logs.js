@@ -1,16 +1,15 @@
 // logs.js
-const util = require('../../utils/util.js')
-
+import {sum} from '@/utils/util'
 Page({
   data: {
     logs: []
   },
   onLoad() {
-    console.log(util.formatTime)
+    sum(1, 1)
     this.setData({
       logs: (wx.getStorageSync('logs') || []).map(log => {
         return {
-          date: util.formatTime(new Date(log)),
+          date: new Date(log),
           timeStamp: log
         }
       })

@@ -1,7 +1,7 @@
 // index.js
 // 获取应用实例
 const app = getApp()
-const util = require('@/utils/util.js')
+// const util = require('@/utils/util.js')
 const parallel = require('@/utils/parallel')
 import lottie from 'lottie-miniprogram'
 Page({
@@ -36,13 +36,15 @@ Page({
       .node((res) => {
         const canvas = res.node
         lottie.setup(canvas)
-        lottie.loadAnimation({
-          autoplay: true,
-          loop: true,
-          animationData: require('../../json/index'),
-          rendererSettings: {
-            context: canvas.getContext('2d')
-          }
+        import('../../json/index').then(_ => {
+          lottie.loadAnimation({
+            autoplay: true,
+            loop: true,
+            animationData: _,
+            rendererSettings: {
+              context: canvas.getContext('2d')
+            }
+          })
         })
       })
       .exec()
@@ -52,7 +54,7 @@ Page({
     wx.getUserProfile({
       desc: '展示用户信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
       success: (res) => {
-        console.log(res)
+        // console.log(res)
         this.setData({
           userInfo: res.userInfo,
           hasUserInfo: true

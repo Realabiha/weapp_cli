@@ -5,13 +5,12 @@ const WxRuntimeChunk = require('./build/plugins/wxRuntimeChunk')
 const WxDynamicEntry = require('./build/plugins/wxDynamicEntry')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 
+const ISPROD = process.env.NODE_ENV === 'production'
 const SRCDIR = resolve(__dirname, 'src') 
 const smp = new SpeedMeasurePlugin()
 const plugins = [
-  new BundleAnalyzerPlugin({
-    openAnalyzer: false,
-  }),
   new CopyWebpackPlugin({
     patterns: [
       {
@@ -26,13 +25,24 @@ const plugins = [
   new WxDynamicEntry(),
   new WxRuntimeChunk(),
 ]
-const webpackCommonConfig = {
+// 配置TerserPlugin剔除console及debug
+const minimizer = [
+  new TerserPlugin({
+    terserOptions: {
+      compress: {
+        drop_debugger: true,
+        drop_console: true,
+      },
+    },
+  }),
+]
+const config = {
   context: SRCDIR,
   mode: 'none',
   target: 'node',
   watchOptions: {
     aggregateTimeout: 500,
-    ignored: /node_modules/,
+    ignored: ['**/node_modules', '**/json'],
     poll: 1000,
   },
   entry: { app: './app.js' },
@@ -56,7 +66,7 @@ const webpackCommonConfig = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
+        use: 'babel-loader',
       },
       {
         test: /\.s(a|c)ss$/,
@@ -74,29 +84,39 @@ const webpackCommonConfig = {
       },
     ],
   },
-  plugins,
+  plugins: ISPROD
+    ? plugins
+    : [new BundleAnalyzerPlugin({ openAnalyzer: false }), ...plugins],
   optimization: {
+    // tree shaking
+    usedExports: true,
+    // runtime code
     runtimeChunk: {
       name: 'runtime',
     },
+    // code splitting
     splitChunks: {
       chunks: 'all',
       name: 'common',
+      // code cache
       cacheGroups: {
         lottie: {
           name: 'lottie',
           test: /[\\/]lottie-miniprogram[\\/]/,
           priority: 0,
         },
-        animationJson: {
-          name: 'animationJson',
-          test: /json/,
-          priority: 0,
-        },
+        // animationJson: {
+        //   name: 'animationJson',
+        //   test: /json/,
+        //   priority: 0,
+        // },
       },
     },
-    moduleIds: 'named'
+    moduleIds: ISPROD ? 'deterministic' : 'named',
   },
 }
 
-module.exports = smp.wrap(webpackCommonConfig)
+// 生产环境剔除console及debug
+ISPROD && (config.optimization.minimizer = minimizer)
+
+module.exports = ISPROD ? config : smp.wrap(config)

@@ -1,4 +1,16 @@
 {
-  "plugins": [],
-  "presets": ["@babel/preset-env"]
+  "plugins": ["@babel/plugin-transform-runtime"],
+  "presets": [
+    [
+      // **语法**转换
+      "@babel/preset-env", 
+      {
+        // 按需引入pollfill抹平浏览器**API**差异
+        "useBuiltIns": "usage", 
+        "modules": false,
+        // pollfill核心依赖库core-js
+        "corejs": 2
+      }
+    ]
+  ]
 }
