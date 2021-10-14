@@ -5,7 +5,7 @@
     "ignore": []
   },
   "setting": {
-    "urlCheck": true,
+    "urlCheck": false,
     "es6": false,
     "enhance": false,
     "postcss": true,
@@ -37,12 +37,14 @@
     "packNpmManually": false,
     "packNpmRelationList": [],
     "minifyWXSS": true,
-    "showES6CompileOption": false
+    "disableUseStrict": false,
+    "showES6CompileOption": false,
+    "useCompilerPlugins": false
   },
   "compileType": "miniprogram",
-  "libVersion": "2.19.3",
+  "libVersion": "2.19.5",
   "appid": "wxf568ceae5450c3da",
-  "projectname": "weapp_bundle",
+  "projectname": "weapp_cli",
   "debugOptions": {
     "hidedInDevtools": []
   },

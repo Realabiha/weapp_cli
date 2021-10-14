@@ -1,6 +1,26 @@
 <!--logs.wxml-->
 <view class="container log-list">
-  <block wx:for="{{logs}}" wx:key="timeStamp" wx:for-item="log">
-    <text class="log-item">{{index + 1}}. {{log.date}}</text>
-  </block>
+  <view class="longlist-ghost">
+    <block wx:for="{{views.length ? views : logs}}" wx:key="index" wx:for-item="items" wx:if="{{logs.length}}">
+      <view class="log-wrap-{{index}}" wx:if="{{items.height}}" style="height: {{items.height}}px">
+        <!-- <block wx:for="{{items}}" wx:key="i" wx:for-index="i">
+          <view class="log-item" style="background: rgb({{item.color}});">第{{index}}屏</view>
+        </block> -->
+      </view>
+      <view class="log-wrap-{{index}}" wx:else>
+        <block wx:for="{{items}}" wx:key="i" wx:for-index="i">
+          <view class="log-item" style="background: rgb({{item.color}}); height: {{1500 || item.height}}rpx">第{{index}}屏</view>
+        </block>
+      </view>
+    </block>
+  </view>
+  <!-- <view class="longlist">
+    <block wx:for="{{views}}" wx:key="index" wx:for-item="items" wx:if="{{logs.length}}">
+      <view class="log-wrap-{{index}}">
+        <block wx:for="{{items}}" wx:key="i" wx:for-index="i">
+          <view class="log-item" style="background: rgb({{item.color}});">第{{index}}屏</view>
+        </block>
+      </view>
+    </block>
+  </view> -->
 </view>

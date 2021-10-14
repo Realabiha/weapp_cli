@@ -1,0 +1,13 @@
+$colorValue: 255;
+.container{
+  width: 100vw;
+  height: 100vh;
+  .longlist-ghost{
+    // overflow: auto;
+    .log-item{
+      height: 300rpx;
+      box-shadow: 0 0 1px 5px #000;
+      background: rgb(random($colorValue),random($colorValue),random($colorValue))
+    }
+  }
+}

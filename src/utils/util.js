@@ -33,3 +33,21 @@ export function formatStr(str){
 }
 
 export class Test{}
+
+export const throtte = function(fn, delay=500, immediate = false){
+  let timer = null
+  return function(...args){
+    const context = this
+    const later = function(){
+      fn.call(context, ...args)
+      clearTimeout(timer)
+      timer = null
+    }
+    const callNow = immediate && !timer
+    // timer && clearTimeout(timer)
+    if(!timer){
+      timer = setTimeout(later, delay)
+    }
+    callNow && fn.call(context, ...args)
+  }
+}

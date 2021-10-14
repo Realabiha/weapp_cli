@@ -9,7 +9,7 @@ const TerserPlugin = require('terser-webpack-plugin')
 
 const ISPROD = process.env.NODE_ENV === 'production'
 const SRCDIR = resolve(__dirname, 'src') 
-const smp = new SpeedMeasurePlugin()
+const SMP = new SpeedMeasurePlugin()
 const plugins = [
   new CopyWebpackPlugin({
     patterns: [
@@ -49,10 +49,12 @@ const config = {
   output: {
     path: resolve(__dirname, 'dist'),
     filename: '[name].js',
+    chunkFilename: 'async_[contenthash:5].js',
     globalObject: 'wx',
     clean: true,
   },
   resolve: {
+    symlinks: false,
     alias: {
       '@': SRCDIR,
     },
@@ -66,7 +68,16 @@ const config = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: 'babel-loader',
+        // use: ['thread-loader', 'cache-loader', 'babel-loader'],
+        use: ['cache-loader', 'babel-loader']
+        // use: [
+        //   {
+        //     loader: 'babel-loader',
+        //     options: {
+        //       cacheDirectory: true
+        //     },
+        //   },
+        // ],
       },
       {
         test: /\.s(a|c)ss$/,
@@ -114,9 +125,14 @@ const config = {
     },
     moduleIds: ISPROD ? 'deterministic' : 'named',
   },
+  devtool: ISPROD ? 'none' : 'cheap-source-map',
+  cache: !ISPROD
 }
 
 // 生产环境剔除console及debug
 ISPROD && (config.optimization.minimizer = minimizer)
 
-module.exports = ISPROD ? config : smp.wrap(config)
+// 构建性能
+// dll thread-loader cache-loader cache
+
+module.exports = ISPROD ? config : SMP.wrap(config)

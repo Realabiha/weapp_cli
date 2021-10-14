@@ -22,6 +22,7 @@
     "@babel/types": "^7.15.6",
     "assert": "^2.0.0",
     "babel-loader": "^8.2.2",
+    "cache-loader": "^4.1.0",
     "clean-webpack-plugin": "^4.0.0-alpha.0",
     "copy-webpack-plugin": "^9.0.1",
     "cross-env": "^7.0.3",
@@ -37,6 +38,7 @@
     "sass-loader": "^12.1.0",
     "speed-measure-webpack-plugin": "^1.5.0",
     "terser-webpack-plugin": "^5.2.4",
+    "thread-loader": "^3.0.4",
     "webpack": "^5.51.1",
     "webpack-bundle-analyzer": "^4.4.2",
     "webpack-cli": "^4.8.0"

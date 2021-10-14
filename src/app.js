@@ -3,14 +3,10 @@ import { sum } from '@/utils/util'
 
 App({
   async onLaunch() {
-    console.log(111)
-    debugger
+    console.log("onLaunch")
     await 1
     // 展示本地存储能力
     wx.setStorageSync('test', sum(1,1))
-    const logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
     // 登录
     wx.login({
       success: res => {
