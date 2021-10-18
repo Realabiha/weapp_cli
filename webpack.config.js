@@ -122,7 +122,7 @@ const config = {
     },
     moduleIds: ISPROD ? 'deterministic' : 'named',
   },
-  devtool: ISPROD ? 'none' : 'cheap-source-map',
+  devtool: false,
   cache: !ISPROD
 }
 

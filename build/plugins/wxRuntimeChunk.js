@@ -11,6 +11,11 @@ class WxRuntimeChunk{
     compiler.hooks.compilation.tap(WXRUNTIMECHUNK, (compilation) => {
       compilation.hooks.beforeChunkAssets.tap(WXRUNTIMECHUNK, _ => {
         const {chunks, mainTemplate, chunkTemplate} = compilation;
+        const assetsChunk = chunks.find(
+          (chunk) => chunk.name === 'assetsChunkName'
+        )
+        assetsChunk && chunks.delete(assetsChunk)
+        if(compiler.options.target == 'node') return
         for(let template of [mainTemplate, chunkTemplate]){
           template.hooks.renderWithEntry.tap(WXRUNTIMECHUNK, (source, entry) => {
             // 非动态入口
@@ -36,8 +41,6 @@ class WxRuntimeChunk{
           })
         }
 
-        const assetsChunk = chunks.find(chunk => chunk.name === 'assetsChunkName')
-        assetsChunk && chunks.delete(assetsChunk)
       })
     })
     compiler.hooks.done.tap(WXRUNTIMECHUNK, stats => {

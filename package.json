@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "lint": "npx eslint ./**/*.js",
+    "lint": "npx eslint ./",
     "lint:fix": "npm run lint -- --fix",
     "dev": "cross-env NODE_ENV=development npx webpack --watch --progress",
     "lint:dev": "npm run lint & npm run dev",
