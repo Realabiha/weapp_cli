@@ -3,7 +3,7 @@
   for + promise + reduce
 */
 
-const tasks = [1,2,3,4,5,6,7,8,9]
+const tasks = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
 // const promises = tasks.map(task => new Promise(resolve => {
 //   const delay = Math.random() * 1000 + 100
 //   setTimeout(_ => {resolve(task); console.log(task, 'async')}, delay)
@@ -17,6 +17,21 @@ const tasks = [1,2,3,4,5,6,7,8,9]
 
 // parallelPromise.then(_ => console.log('done')).catch(err => console.log(err))
 
+function promisify(fn) {
+  return function (config = {}) {
+    return new Promise((resolve, reject) => {
+      config.success = (data) => resolve(data)
+      config.fail = (err) => reject(err)
+      // fn(config)
+      const delay = Math.random() * 1000
+      setTimeout(() => {
+        console.log(fn)
+        resolve(fn)
+      }, delay)
+    })
+  }
+}
+
 
 /*
 
@@ -25,15 +40,15 @@ const tasks = [1,2,3,4,5,6,7,8,9]
 function limitParallel(limit = 3){
   const sequence = tasks.slice(0)
   const promises = sequence.splice(0, limit).map((task, index) => {
-      // ...
-      promisify(task)().then(_ => {console.log(_, '='); return index})
+    // ...
+    promisify(task)().then(_ => {console.log(_, '='); return index})
   })
 
   let p = Promise.race(promises)
 
   for(let i = 0; i < sequence.length; i++){
     p = p.then(index => {
-      promises[index] = promisify(sequence[i])().then(_ => {
+      promises[index] = promisify(sequence[i])().then(() => {
         return index
       })
       return Promise.race(promises)
@@ -41,43 +56,34 @@ function limitParallel(limit = 3){
   }
 }
 
-function promisify(fn){
-  return function(config = {}){
-    return new Promise((resolve, reject) => {
-      // config.success = data => resolve(data)
-      // config.fail = err => reject(err)
-      // fn(config)
-      const delay = Math.random()*1000
-      setTimeout(_ => {
-        console.log(fn)
-        resolve(fn)
-      }, delay)
-    })
-  }
-}
-
-// limitParallel()
 
 
-function limitPromiseParallel(tasks = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], limit = 5, callback = _ => console.log(_)){
+limitParallel()
+
+
+function limitPromiseParallel(
+  limit = 5, 
+  callback = _ => console.log(_, 'finally')
+){
   Promise.all(
-    Array.from({length: limit}).map(task => {
-      return new Promise(async (resolve, reject) => {
-        // const runTask = async () => {
-        //   if(tasks.length <= 0) return resolve()
-        //   await promisify(tasks.shift())()
-        //   runTask()
-        // }
-        // runTask()
-        while(tasks.length){
-          await promisify(tasks.shift())()
-        }
-        resolve()
-      })
+    // async函数本身会返回promise对象
+    Array.from({length: limit}).map(async (_) => {
+      // return new Promise(async (resolve) => {
+      // const runTask = async () => {
+      //   if(tasks.length <= 0) return resolve()
+      //   await promisify(tasks.shift())()
+      //   runTask()
+      // }
+      // runTask()
+      while(tasks.length){
+        await promisify(tasks.shift())()
+      }
+      // resolve()
+      // })
     })
-  ).then(callback)
+  ).finally(callback)
 }
 
-// limitPromiseParallel()
+limitPromiseParallel()
 
 // export {}

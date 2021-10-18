@@ -1,7 +1,7 @@
 // logs.js
 import {throtte} from '@/utils/util'
-let nowIndex = 0,
-    windowHeight = 0
+let [nowIndex, windowHeight] = [0, 0]
+
 
 Page({
   data: {
@@ -15,7 +15,7 @@ Page({
     this.handleFetchData()
   },
   onReachBottom(){
-    setTimeout(_ => this.handleFetchData())
+    setTimeout(() => this.handleFetchData())
   },
   onPageScroll: throtte(function(e){
     console.log('onScroll')
@@ -51,7 +51,7 @@ Page({
   }, 500),
   async handleFetchData(){
     const value = `logs[${nowIndex}]`
-    const data = await new Array(10).fill('').map(_ => {
+    const data = await new Array(10).fill('').map(() => {
       return {
         height: Math.random()*1500,
         date: new Date().toLocaleTimeString(),
@@ -62,7 +62,7 @@ Page({
       [value]: data,
       pageIndex: nowIndex
     },
-    _ => {
+    () => {
       const querySelector = wx.createSelectorQuery()
       querySelector.select(`.log-wrap-${nowIndex}`).boundingClientRect()
       querySelector.exec(res => {
@@ -72,7 +72,7 @@ Page({
           this.setData({
             [value]: res[0].height
           }, 
-          _ => {
+          () => {
             nowIndex++
           })
         }

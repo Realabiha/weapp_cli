@@ -3,6 +3,14 @@
 - npm run build production打包
 - npm run debug debug调试
 
+# why use webpack
+- 更好的npm使用体验
+- 可使用sass等预处理器
+- 可使用babel转换es6+
+- 多环境支持
+- 维护更方便
+- ...
+
 # webpack
 ## module chunk bundle
 - 源代码中的各种js/css/jpg模块文件
@@ -91,3 +99,4 @@ num += 1 // error read-only
 numPlus() // num = 2
 ```
 
+## 异步加载([https://pic3.zhimg.com/v2-8e79cd0f8ad4f3087667c69aedf47512_r.jpg])
