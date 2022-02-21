@@ -40,7 +40,7 @@ const minimizer = [
 ]
 const config = {
   context: SRCDIR,
-  mode: 'development',
+  mode: 'none',
   target: 'node',
   watchOptions: {
     aggregateTimeout: 500,
@@ -56,7 +56,6 @@ const config = {
     clean: true,
   },
   resolve: {
-    symlinks: false,
     alias: {
       '@': SRCDIR,
     },
@@ -70,8 +69,9 @@ const config = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
+        use: 'babel-loader'
         // use: ['thread-loader', 'cache-loader', 'babel-loader'],
-        use: ['cache-loader', 'babel-loader']
+        // use: ['cache-loader', 'babel-loader']
         // use: [
         //   {
         //     loader: 'babel-loader',
@@ -92,6 +92,7 @@ const config = {
               context: resolve('src'),
             },
           },
+          'postcss-loader',
           'sass-loader',
         ],
       },
@@ -112,18 +113,20 @@ const config = {
       chunks: 'all',
       name: 'common',
       // code cache
-      // cacheGroups: {
-      //   lottie: {
-      //     name: 'lottie',
-      //     test: /[\\/]lottie-miniprogram[\\/]/,
-      //     priority: 0,
-      //   },
-      // },
+      cacheGroups: {
+        lottie: {
+          name: 'lottie',
+          test: /[\\/]lottie-miniprogram[\\/]/,
+          priority: 0,
+        },
+      },
     },
     moduleIds: ISPROD ? 'deterministic' : 'named',
   },
-  devtool: false,
-  cache: !ISPROD
+  // devtool: false,
+  cache: {
+    type: 'filesystem'
+  }
 }
 
 // 生产环境剔除console及debug
