@@ -4,6 +4,7 @@
 .flex_column{
   display: flex;
   flex-direction: column;
+  transform: translate(0, 0);
 }
 @mixin skeleton{
   border-radius: 8rpx;
