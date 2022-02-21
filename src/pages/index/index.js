@@ -36,16 +36,16 @@ Page({
       .node((res) => {
         const canvas = res.node
         lottie.setup(canvas)
-        import('../../json/index').then(_ => {
-          lottie.loadAnimation({
-            autoplay: true,
-            loop: true,
-            animationData: _,
-            rendererSettings: {
-              context: canvas.getContext('2d')
-            }
-          })
+        // import('../../json/index').then(_ => {
+        lottie.loadAnimation({
+          autoplay: true,
+          loop: true,
+          animationData: require('../../json/index'),
+          rendererSettings: {
+            context: canvas.getContext('2d')
+          }
         })
+        // })
       })
       .exec()
   },
