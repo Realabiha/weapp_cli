@@ -15,7 +15,7 @@ class WxRuntimeChunk{
           (chunk) => chunk.name === 'assetsChunkName'
         )
         assetsChunk && chunks.delete(assetsChunk)
-        if(compiler.options.target == 'node') return
+        // if(compiler.options.target == 'node') return
         for(let template of [mainTemplate, chunkTemplate]){
           template.hooks.renderWithEntry.tap(WXRUNTIMECHUNK, (source, entry) => {
             // 非动态入口
