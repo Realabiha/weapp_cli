@@ -1,6 +1,8 @@
 // app.js
 // import { sum } from '@/utils/util'
+import axios from 'axios-wx-request'
 
+axios({url: 'https://www.baidu.com'}).then(res => console.log(res))
 App({
   async onLaunch() {
     console.log('123')

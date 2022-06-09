@@ -7,6 +7,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
+const CompressionPlugin = require('compression-webpack-plugin')
 
 const ISPROD = process.env.NODE_ENV === 'production'
 const SRCDIR = resolve(__dirname, 'src') 
@@ -25,23 +26,25 @@ const plugins = [
     ],
   }),
   new WxDynamicEntry(),
+  // target=web
   new WxRuntimeChunk(),
+  // new CompressionPlugin(),
 ]
 // 配置TerserPlugin剔除console及debug
-const minimizer = [
-  new TerserPlugin({
-    terserOptions: {
-      compress: {
-        drop_debugger: true,
-        drop_console: true,
-      },
-    },
-  }),
-]
+// const minimizer = [
+//   new TerserPlugin({
+//     terserOptions: {
+//       compress: {
+//         drop_debugger: true,
+//         drop_console: true,
+//       },
+//     },
+//   }),
+// ]
 const config = {
   context: SRCDIR,
-  mode: 'none',
-  target: 'node',
+  mode: ISPROD ? 'production' : 'development',
+  // target: 'node',
   watchOptions: {
     aggregateTimeout: 500,
     ignored: ['**/node_modules', '**/json'],
@@ -50,10 +53,11 @@ const config = {
   entry: { app: './app.js' },
   output: {
     path: resolve(__dirname, 'dist'),
-    filename: '[name].js',
-    chunkFilename: 'async_[contenthash:5].js',
+    filename: ISPROD ? '[contenthash:5].js' : '[name].js',
+    chunkFilename: ISPROD ?'async_[contenthash:5].js' : 'async_[name].js',
     globalObject: 'wx',
     clean: true,
+    publicPath: '',
   },
   resolve: {
     alias: {
@@ -67,19 +71,20 @@ const config = {
   module: {
     rules: [
       {
+        test: /\.wxml$/,
+        include: /src/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: '[path][name].wxml',
+            context: resolve('src')
+          }
+        }
+      },
+      {
         test: /\.js$/,
         exclude: /node_modules/,
         use: 'babel-loader'
-        // use: ['thread-loader', 'cache-loader', 'babel-loader'],
-        // use: ['cache-loader', 'babel-loader']
-        // use: [
-        //   {
-        //     loader: 'babel-loader',
-        //     options: {
-        //       cacheDirectory: true
-        //     },
-        //   },
-        // ],
       },
       {
         test: /\.s(a|c)ss$/,
@@ -89,18 +94,28 @@ const config = {
             loader: 'file-loader',
             options: {
               name: '[path][name].wxss',
-              context: resolve('src'),
+              context: resolve('src')
             },
           },
           'postcss-loader',
           'sass-loader',
         ],
       },
+      {
+        test: /\.(jpg|jpeg|png|webp|gif)$/,
+        type: 'asset',
+        generator: {
+          filename: 'assets/[name].[ext]'
+        },
+        parser: {
+          dataUrlCondition: {
+            maxSize: 100 * 1024
+          }
+        }
+      }
     ],
   },
-  plugins: ISPROD
-    ? plugins
-    : [new BundleAnalyzerPlugin({ openAnalyzer: false }), ...plugins],
+  plugins,
   optimization: {
     // tree shaking
     usedExports: true,
@@ -123,16 +138,17 @@ const config = {
     },
     moduleIds: ISPROD ? 'deterministic' : 'named',
   },
-  // devtool: false,
+  devtool: ISPROD ? false : 'source-map',
   cache: {
     type: 'filesystem'
   }
 }
 
 // 生产环境剔除console及debug
-ISPROD && (config.optimization.minimizer = minimizer)
+// ISPROD && (config.optimization.minimizer = minimizer)
 
 // 构建性能
 // dll thread-loader cache-loader cache
 
-module.exports = ISPROD ? config : SMP.wrap(config)
+// module.exports = ISPROD ? config : SMP.wrap(config)
+module.exports = config

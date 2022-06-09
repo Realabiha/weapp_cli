@@ -2,17 +2,19 @@
   "name": "weapp_bundle",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "lint": "npx eslint ./",
-    "lint:fix": "npm run lint -- --fix",
-    "dev": "cross-env npx webpack --watch --progress",
-    "lint:dev": "npm run lint & npm run dev",
-    "build": "cross-env NODE_ENV=production npx webpack --mode=production --progress",
-    "lint:build": "npm run lint & npm run build",
+    "lint": "npx eslint ./ --fix",
+    "dev": "cross-env NODE_ENV=development BUILD_TARGET=WECHAT npx webpack --watch --progress --mode=development",
+    "dev:lint": "npm run lint && npm run dev",
+    "build": "npx webpack --progress --mode=production",
+    "postbuild": "echo after run build script",
     "debug": "node --inspect-brk ./node_modules/webpack/bin/webpack.js"
   },
-  "keywords": [],
+  "keywords": [
+    "webpack",
+    "wx",
+    "miniprogram"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
@@ -21,19 +23,22 @@
     "@babel/parser": "^7.15.6",
     "@babel/plugin-transform-runtime": "^7.15.0",
     "@babel/preset-env": "^7.15.0",
-    "@babel/traverse": "^7.15.4",
+    "@babel/traverse": "^7.17.3",
     "@babel/types": "^7.15.6",
     "assert": "^2.0.0",
     "autoprefixer": "^10.4.2",
     "babel-loader": "^8.2.2",
     "cache-loader": "^4.1.0",
     "clean-webpack-plugin": "^4.0.0",
+    "compression-webpack-plugin": "^9.2.0",
     "copy-webpack-plugin": "^9.0.1",
     "cross-env": "^7.0.3",
     "dart-sass": "^1.25.0",
     "ensure-posix-path": "^1.1.1",
     "eslint": "^8.0.1",
     "file-loader": "^6.2.0",
+    "html-loader": "^3.1.0",
+    "htmlparser": "^1.7.7",
     "loader-utils": "^2.0.0",
     "path-browserify": "^1.0.1",
     "postcss": "^8.4.6",
@@ -51,6 +56,7 @@
     "webpack-cli": "^4.8.0"
   },
   "dependencies": {
+    "axios-wx-request": "^1.0.4",
     "core-js": "^2.6.12",
     "lottie-miniprogram": "^1.0.12"
   }

@@ -4,8 +4,14 @@
 // const util = require('@/utils/util.js')
 // const parallel = require('@/utils/parallel')
 import lottie from 'lottie-miniprogram'
+// import webp from '../../assets/module.webp'
+import result from './index.wxml'
+console.log(result, 'result=====')
+
 Page({
   data: {
+    // webp,
+    result,
     motto: 'Hello World',
     userInfo: {},
     flag: true,
@@ -37,14 +43,14 @@ Page({
         const canvas = res.node
         lottie.setup(canvas)
         // import('../../json/index').then(_ => {
-        lottie.loadAnimation({
-          autoplay: true,
-          loop: true,
-          animationData: require('../../json/index'),
-          rendererSettings: {
-            context: canvas.getContext('2d')
-          }
-        })
+        // lottie.loadAnimation({
+        //   autoplay: true,
+        //   loop: true,
+        //   animationData: require('../../json/index'),
+        //   rendererSettings: {
+        //     context: canvas.getContext('2d')
+        //   }
+        // })
         // })
       })
       .exec()
