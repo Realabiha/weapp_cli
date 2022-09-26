@@ -111,7 +111,8 @@ const config = {
     },
     // moduleIds: ISPROD ? 'deterministic' : 'named',
   },
-  devtool: 'cheap-source-map',
+  // devtool: 'cheap-source-map',
+  devtool: false,
   cache: {
     type: 'filesystem'
   }
