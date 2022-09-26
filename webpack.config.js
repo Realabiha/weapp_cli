@@ -2,12 +2,9 @@ const path = require('path')
 const {resolve} = path
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const WxRuntimeChunk = require('./build/plugins/wxRuntimeChunk')
-const WxDynamicEntry = require('./build/plugins/wxDynamicEntry')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
-const TerserPlugin = require('terser-webpack-plugin')
-const CompressionPlugin = require('compression-webpack-plugin')
 
 const ISPROD = process.env.NODE_ENV === 'production'
 const SRCDIR = resolve(__dirname, 'src') 
@@ -25,22 +22,9 @@ const plugins = [
       },
     ],
   }),
-  new WxDynamicEntry(),
-  // target=web
   new WxRuntimeChunk(),
-  // new CompressionPlugin(),
 ]
-// 配置TerserPlugin剔除console及debug
-// const minimizer = [
-//   new TerserPlugin({
-//     terserOptions: {
-//       compress: {
-//         drop_debugger: true,
-//         drop_console: true,
-//       },
-//     },
-//   }),
-// ]
+
 const config = {
   context: SRCDIR,
   mode: ISPROD ? 'production' : 'development',
@@ -70,17 +54,6 @@ const config = {
   },
   module: {
     rules: [
-      {
-        test: /\.wxml$/,
-        include: /src/,
-        use: {
-          loader: 'file-loader',
-          options: {
-            name: '[path][name].wxml',
-            context: resolve('src')
-          }
-        }
-      },
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -136,9 +109,9 @@ const config = {
         },
       },
     },
-    moduleIds: ISPROD ? 'deterministic' : 'named',
+    // moduleIds: ISPROD ? 'deterministic' : 'named',
   },
-  devtool: ISPROD ? false : 'source-map',
+  devtool: 'cheap-source-map',
   cache: {
     type: 'filesystem'
   }
@@ -151,4 +124,5 @@ const config = {
 // dll thread-loader cache-loader cache
 
 // module.exports = ISPROD ? config : SMP.wrap(config)
+config.entry = require('./build/utils/getEntries')(SRCDIR, config.entry)
 module.exports = config

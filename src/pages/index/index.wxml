@@ -1,7 +1,7 @@
 <!--index.wxml-->
 <view class="container">
-  <image class="" src="../../assets/module.webp" />
-  <!-- <image class="" src="{{webp}}" /> -->
+  <image class="" src="../../assets/module.png" />
+  <image class="" src="{{webp}}" />
   <test />
   <canvas id="canvas" type="2d"></canvas>
 </view>

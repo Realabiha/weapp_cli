@@ -1,18 +1,11 @@
 // index.js
-// 获取应用实例
-// const app = getApp()
-// const util = require('@/utils/util.js')
-// const parallel = require('@/utils/parallel')
 import lottie from 'lottie-miniprogram'
-// import webp from '../../assets/module.webp'
-import result from './index.wxml'
-console.log(result, 'result=====')
+import webp from '../../assets/module.png'
 
 Page({
   data: {
-    // webp,
-    result,
-    motto: 'Hello World',
+    webp,
+    motto: 'Hello World!!',
     userInfo: {},
     flag: true,
     hasUserInfo: false,
