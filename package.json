@@ -3,12 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "lint": "npx eslint ./ --fix",
-    "dev": "cross-env NODE_ENV=development BUILD_TARGET=WECHAT npx webpack --watch --progress --mode=development",
-    "dev:lint": "npm run lint && npm run dev",
-    "build": "npx webpack --progress --mode=production",
-    "postbuild": "echo after run build script",
-    "debug": "node --inspect-brk ./node_modules/webpack/bin/webpack.js"
+    "dev": "cross-env NODE_ENV=development BUILD_TARGET=WECHAT webpack --watch --progress --mode=development",
+    "build": "webpack --progress --mode=production"
   },
   "keywords": [
     "webpack",
@@ -24,41 +20,29 @@
     "@babel/plugin-transform-runtime": "^7.15.0",
     "@babel/preset-env": "^7.15.0",
     "@babel/traverse": "^7.17.3",
-    "@babel/types": "^7.15.6",
-    "assert": "^2.0.0",
     "autoprefixer": "^10.4.2",
     "babel-loader": "^8.2.2",
-    "cache-loader": "^4.1.0",
-    "clean-webpack-plugin": "^4.0.0",
-    "compression-webpack-plugin": "^9.2.0",
     "copy-webpack-plugin": "^9.0.1",
     "cross-env": "^7.0.3",
     "dart-sass": "^1.25.0",
     "ensure-posix-path": "^1.1.1",
-    "eslint": "^8.0.1",
     "file-loader": "^6.2.0",
     "glob": "^8.0.3",
-    "html-loader": "^3.1.0",
-    "htmlparser": "^1.7.7",
     "loader-utils": "^2.0.0",
-    "path-browserify": "^1.0.1",
     "postcss": "^8.4.6",
     "postcss-loader": "^6.2.1",
-    "progress-bar-webpack-plugin": "^2.1.0",
     "replace-ext": "^2.0.0",
     "required-path": "^1.0.1",
     "sass": "^1.38.2",
     "sass-loader": "^12.1.0",
     "speed-measure-webpack-plugin": "^1.5.0",
-    "terser-webpack-plugin": "^5.2.4",
-    "thread-loader": "^3.0.4",
     "webpack": "^5.69.1",
     "webpack-bundle-analyzer": "^4.4.2",
     "webpack-cli": "^4.8.0"
   },
   "dependencies": {
     "axios-wx-request": "^1.0.4",
-    "core-js": "^2.6.12",
+    "core-js": "^3.28.0",
     "lottie-miniprogram": "^1.0.12"
   }
 }

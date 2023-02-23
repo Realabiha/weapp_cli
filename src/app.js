@@ -1,8 +1,11 @@
 // app.js
 // import { sum } from '@/utils/util'
-import axios from 'axios-wx-request'
-
-axios({url: 'https://www.baidu.com'}).then(res => console.log(res))
+// import axios from 'axios-wx-request'
+import axios from '@/utils/axios-wx-request'
+const { cancelPromise, cancelFunc } = axios.cancelFunc()
+console.log(cancelPromise)
+axios({ url: 'https://www.baidu.com', cancelPromise }).then(res => console.log(res), rej => console.log(rej))
+cancelFunc()
 App({
   async onLaunch() {
     console.log('123')

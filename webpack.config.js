@@ -1,16 +1,14 @@
 const path = require('path')
-const {resolve} = path
+const { resolve } = path
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const WxRuntimeChunk = require('./build/plugins/wxRuntimeChunk')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
 
 const ISPROD = process.env.NODE_ENV === 'production'
-const SRCDIR = resolve(__dirname, 'src') 
+const SRCDIR = resolve(__dirname, 'src')
 const SMP = new SpeedMeasurePlugin()
 const plugins = [
-  new CleanWebpackPlugin(),
   new CopyWebpackPlugin({
     patterns: [
       {
@@ -38,7 +36,7 @@ const config = {
   output: {
     path: resolve(__dirname, 'dist'),
     filename: ISPROD ? '[contenthash:5].js' : '[name].js',
-    chunkFilename: ISPROD ?'async_[contenthash:5].js' : 'async_[name].js',
+    chunkFilename: ISPROD ? 'async_[contenthash:5].js' : 'async_[name].js',
     globalObject: 'wx',
     clean: true,
     publicPath: '',
