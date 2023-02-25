@@ -41,7 +41,7 @@
     "webpack-cli": "^4.8.0"
   },
   "dependencies": {
-    "axios-wx-request": "^1.1.4",
+    "axios-wx-request": "^1.1.5",
     "core-js": "^3.28.0",
     "lottie-miniprogram": "^1.0.12"
   }
