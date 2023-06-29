@@ -1,7 +1,7 @@
 // app.js
 // import { sum } from '@/utils/util'
-// import axios from 'axios-wx-request'
-import axios from '@/utils/axios-wx-request'
+import axios from 'axios-wx-request'
+// import axios from '@/utils/axios-wx-request'
 const { cancelPromise, cancelFunc } = axios.cancelFunc()
 console.log(cancelPromise)
 console.log(axios, 'axios')
